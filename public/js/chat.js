@@ -6,7 +6,7 @@ const btnSalir=document.getElementById("btnSalir");
 
 var url = ( window.location.hostname.includes('localhost') )
                     ? 'http://localhost:8080/api/auth/'
-                    : 'https://restserver-curso-fher.herokuapp.com/api/auth/google';/* TODO cambiar esto */
+                    : 'https://chattsockett.onrender.com/api/auth';/* TODO cambiar esto */
 
 let usuario=null;
 let socket=null;
