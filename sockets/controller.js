@@ -18,28 +18,34 @@ const socketController=async(socket=new Socket(),io)=>{   // TODO: sacar el new 
     // la persona q se conecta, la tengo q agregar a los usuarios conectados q tengo en chatMensaje   
     chatMensajes.conectarUsuario(usuario);
     io.emit("usuarios-activos",chatMensajes.getUsuarios); // les paso a todos... todos los user q están conectados
-
-
+    socket.emit('nuevo-mensaje',chatMensajes.getUltimos10msg);
+    socket.join(usuario.id);// se conecta a una sala especial, podría enviar un arreglo de salas
 
     //listenners
     socket.on('disconnect',()=>{
         console.log("Cliente desconectado ",socket.id);
         chatMensajes.desconectarUsuario(usuario.id);
         io.emit('usuarios-activos',chatMensajes.getUsuarios);
-        
-    })
-    socket.on('enviar-mensaje',(payload,cb)=>{ // acá escucho el cliente que me emita "enviar-mensaje"
-        //console.log(payload);//generalmente recibimos un payload, info, un objeto y no un mensaje, un string, sino tendría q enviar varios eventos por cada propiedad de un objeto
-       // payload.mensaje="respuesta a: "+payload.mensaje+ " desde el server";
-   
 
-       const id=12345; // este id me lo debería generar la DB
-       //ahora le quiero enviar a la persona
-       cb(id);
-   // this.io.emit('enviar-mensaje', payload);//no puedo usar this.io acá porque no lo recibí por parámetros y si hago "socket.emit('enviar-mensaje, payloas)" eso solo le va a enviar al cliente que emitió  ==> como le envio a todos los clientes conectados algo?=
-  // socket.broadcast.emit('enviar-mensaje',payload); // así se envia un msj a todos los clientes menos al que emitio
-   io.emit('enviar-mensaje',payload)    
-})
+    })
+
+    socket.on('dameELChat',(id)=>{
+
+    })
+
+
+    socket.on('enviar-mensaje',({mensaje,uid})=>{
+        
+        if(uid){//mensaje privado, solo se emite para esa sala de chat
+            socket.to(uid).emit('mensaje-privado',{de:usuario.nombre,mensaje})
+        }
+        else{
+        chatMensajes.enviarMensaje(usuario.id,usuario.nombre,mensaje);
+        
+        io.emit('nuevo-mensaje', chatMensajes.getUltimos10msg)}
+    })
+
+  
 }
 
 module.exports={

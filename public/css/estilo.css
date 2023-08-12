@@ -1,0 +1,19 @@
+#chat{
+    width: 200px;
+    height: 30vh;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: violet;
+    display:flex;
+    flex-direction: column;
+    
+    
+
+}
+
+
+#txtMensajepv{
+    position:absolute;
+    bottom:5px;
+}

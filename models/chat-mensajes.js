@@ -30,7 +30,7 @@ class ChatMensajes{
     }
 
     enviarMensaje(uid,nombre,mensaje){
-        this.mensaje.unshift(new Mensaje(uid,nombre,mensaje))
+        this.#ultimos10msg.unshift(new Mensaje(uid,nombre,mensaje))
         this.#ultimos10msg=this.#ultimos10msg.splice(0,10);
     }
 
