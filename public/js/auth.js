@@ -53,7 +53,7 @@ formulario.addEventListener('submit',ev=>{ //el listener q necesito escuchar es 
 
      }
 
-     const button=document.getElementById("google_signout");
+ /*     const button=document.getElementById("google_signout");
      button.onclick=async()=>{
       console.log("a ver ",google.accounts.id);// si estamos auth==> tenemos acceso a 'google.accounts.id'
       google.accounts.id.disableAutoSelect();
@@ -62,4 +62,4 @@ formulario.addEventListener('submit',ev=>{ //el listener q necesito escuchar es 
          location.reload();
          
       })
-     }
+     } */
